@@ -31,7 +31,7 @@ F13 & M::Send,{APPSKEY}
 F13 & w::Send,^{F4}
 F13 & O::Send,{APPSKEY}{a} ; 管理者権限で実行
 F13 & y::Send,{BackSpace}
-F13 & p::Send,{'{} ;カッコが遠いので
+F13 & p::Send,{{}
 
 F13 & R::Reload      ;リロード
 F13 & f::Edit        ;編集
