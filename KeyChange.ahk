@@ -45,10 +45,10 @@ F13 & 7::Send,#7
 F13 & 8::Send,#8
 F13 & 9::Send,#9
 
-; taskSwitcher
+; Keypirinha taskSwitcher
 F13 & c::Send,!{Space} {s}{w}{i}{c}{h}{Tab}
 
-;選択したパスのフォルダを開く
+;選択したパスのフォルダを開く もしくは検索
 F13 & g::
 ClipSaved := ClipboardAll
 Send,^c
@@ -68,7 +68,6 @@ Run,https://www.google.co.jp/search?q="""%Clipboard%""
 Clipboard := ClipSaved
 ClipSaved =
 Return
-
 
 
 ; 英語に変換
@@ -178,6 +177,7 @@ if(ErrorLevel == "EndKey:J"){
 }
 Return
 
+; Shift空打ち
 $*~LShift::Send {Blind}{Shift}
 LShift up::
     if (A_PriorKey == "LShift")
