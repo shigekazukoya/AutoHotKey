@@ -31,6 +31,8 @@ F13 & M::Send,{APPSKEY}
 F13 & w::Send,^{F4}
 F13 & O::Send,{APPSKEY}{a} ; 管理者権限で実行
 F13 & y::Send,{BackSpace}
+F13 & p::Send,{'{} ;カッコが遠いので
+
 F13 & R::Reload      ;リロード
 F13 & f::Edit        ;編集
 
@@ -81,11 +83,11 @@ return
 
 ; 日本語変換変換
 F15::
-WinGet, vcurrentwindow, ID, A
-    vimestate := DllCall("user32.dll\SendMessageA", "UInt", DllCall("imm32.dll\ImmGetDefaultIMEWnd", "Uint", vcurrentwindow), "UInt", 0x0283, "Int", 0x0005, "Int", 0)
-if (vimestate == 1) {
-Return
-}
+; WinGet, vcurrentwindow, ID, A
+;     vimestate := DllCall("user32.dll\SendMessageA", "UInt", DllCall("imm32.dll\ImmGetDefaultIMEWnd", "Uint", vcurrentwindow), "UInt", 0x0283, "Int", 0x0005, "Int", 0)
+; if (vimestate == 1) {
+; Return
+; }
 Send,{sc029}
 return
 ;ローマ字の再変換
