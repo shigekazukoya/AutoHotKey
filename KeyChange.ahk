@@ -26,12 +26,15 @@ F13 & T::Send,{Home}
 F13 & E::Send,{End}
 F13 & U::Send,{PgUp}
 F13 & D::Send,{Pgdn}
-
 F13 & M::Send,{APPSKEY}
 F13 & w::Send,^{F4}
 F13 & O::Send,{APPSKEY}{a} ; 管理者権限で実行
 F13 & y::Send,{BackSpace}
 F13 & p::Send,{{}
+F13 & q::Send,
+!{Tab}
+return
+; F13 & q::Send,!{Tab}{Right}!{tab}
 
 F13 & R::Reload      ;リロード
 F13 & f::Edit        ;編集
@@ -46,6 +49,45 @@ F13 & 6::Send,#6
 F13 & 7::Send,#7
 F13 & 8::Send,#8
 F13 & 9::Send,#9
+; task切り替え用
+enter & 1::Send,#1
+enter & 2::Send,#2
+enter & 3::Send,#3
+enter & 4::Send,#4
+enter & 5::Send,#5
+enter & 6::Send,#6
+enter & 7::Send,#7
+enter & 8::Send,#8
+enter & 9::Send,#9
+
+;enterに機能追加
+enter & r::Send,#r
+enter & h::Send,#{Left}
+enter & j::Send,#{Down}
+enter & k::Send,#{up}
+enter & l::Send,#{Right}
+
+;Enterを押したとき
+$*Enter::
+    if (isenterRepeat == true)    ;キーリピートしているかどうか
+    {
+        if (A_PriorKey != "Enter") ;Enter長押し中の他キー押し下げを検出
+        {
+            KeyWait, Enter
+            isenterRepeat := false
+            Return
+        }
+        else Return
+    }
+    isenterRepeat := true
+Return
+;Enterを離したとき
+$*Enter up::
+    isenterRepeat := false
+    if (A_PriorKey == "Enter"){     ;Enter単押しを検出
+        Send {Blind}{Enter}     ;Enterを入力
+    }
+Return
 
 ; Keypirinha taskSwitcher
 F13 & c::Send,!{Space} {s}{w}{i}{c}{h}{Tab}
@@ -74,11 +116,11 @@ Return
 
 ; 英語に変換
 Lalt::
-WinGet, vcurrentwindow, ID, A
-    vimestate := DllCall("user32.dll\SendMessageA", "UInt", DllCall("imm32.dll\ImmGetDefaultIMEWnd", "Uint", vcurrentwindow), "UInt", 0x0283, "Int", 0x0005, "Int", 0)
-if (vimestate == 1) {
-	Send,{sc029}
-}
+; WinGet, vcurrentwindow, ID, A
+;     vimestate := DllCall("user32.dll\SendMessageA", "UInt", DllCall("imm32.dll\ImmGetDefaultIMEWnd", "Uint", vcurrentwindow), "UInt", 0x0283, "Int", 0x0005, "Int", 0)
+; if (vimestate == 1) {
+	Send,{Esc}
+; }
 return
 
 ; 日本語変換変換
