@@ -1,8 +1,8 @@
 ;方向キー
-F13 & H::Send,{Blind}{Left}
-F13 & J::Send,{Blind}{Down}
-F13 & K::Send,{Blind}{Up}
-F13 & L::Send,{Blind}{Right}
+BackSpace & H::Send,{Blind}{Left}
+BackSpace & J::Send,{Blind}{Down}
+BackSpace & K::Send,{Blind}{Up}
+BackSpace & L::Send,{Blind}{Right}
 
 ;Alt+方向キー
 LAlt & H::Send,{Blind}{Lalt}{Left}
@@ -11,89 +11,64 @@ LAlt & K::Send,{Blind}{Lalt}{Up}
 LAlt & L::Send,{Blind}{Lalt}{Right}
 
 ;Win+l 回避の為
-f14::LWin
-#l::
-	Send,{Win Up}
-	run,rundll32.exe user32.dll`,LockWorkStation
-return
+; f14::LWin
+; #l::
+; 	Send,{Win Up}
+; 	run,rundll32.exe user32.dll`,LockWorkStation
+; return
 
 ;BS Delete
-F13::Send,{BackSpace}
-+F13::Send {Delete}
+BackSpace::Send,{BackSpace}
++BackSpace::Send {Delete}
 
 ;Home End PgUp Pgdn
-F13 & T::Send,{Home}
-F13 & E::Send,{End}
-F13 & U::Send,{PgUp}
-F13 & D::Send,{Pgdn}
-F13 & M::Send,{APPSKEY}
-F13 & w::Send,^{F4}
-F13 & O::Send,{APPSKEY}{a} ; 管理者権限で実行
-F13 & y::Send,{BackSpace}
-F13 & p::Send,{{}
-F13 & q::Send,
-!{Tab}
-return
-; F13 & q::Send,!{Tab}{Right}!{tab}
+BackSpace & M::Send,{APPSKEY}
+BackSpace & w::Send,^{F4}
+BackSpace & O::Send,{APPSKEY}{a} ; 管理者権限で実行
+BackSpace & y::Send,{BackSpace}
 
-F13 & R::Reload      ;リロード
-F13 & f::Edit        ;編集
+BackSpace & R::Reload      ;リロード
+BackSpace & f::Edit        ;編集
 
 ; task切り替え用
-F13 & 1::Send,#1
-F13 & 2::Send,#2
-F13 & 3::Send,#3
-F13 & 4::Send,#4
-F13 & 5::Send,#5
-F13 & 6::Send,#6
-F13 & 7::Send,#7
-F13 & 8::Send,#8
-F13 & 9::Send,#9
+BackSpace & 1::Send,#1
+BackSpace & 2::Send,#2
+BackSpace & 3::Send,#3
+BackSpace & 4::Send,#4
+BackSpace & 5::Send,#5
+BackSpace & 6::Send,#6
+BackSpace & 7::Send,#7
+BackSpace & 8::Send,#8
+BackSpace & 9::Send,#9
 ; task切り替え用
-enter & 1::Send,#1
-enter & 2::Send,#2
-enter & 3::Send,#3
-enter & 4::Send,#4
-enter & 5::Send,#5
-enter & 6::Send,#6
-enter & 7::Send,#7
-enter & 8::Send,#8
-enter & 9::Send,#9
+Enter & 1::Send,#1
+Enter & 2::Send,#2
+Enter & 3::Send,#3
+Enter & 4::Send,#4
+Enter & 5::Send,#5
+Enter & 6::Send,#6
+Enter & 7::Send,#7
+Enter & 8::Send,#8
+Enter & 9::Send,#9
 
 ;enterに機能追加
-enter & r::Send,#r
-enter & h::Send,#{Left}
-enter & j::Send,#{Down}
-enter & k::Send,#{up}
-enter & l::Send,#{Right}
+Enter & r::Send,#r
+Enter & h::Send,#{Left}
+Enter & j::Send,#{Down}
+Enter & k::Send,#{up}
+Enter & l::Send,#{Right}
 
-;Enterを押したとき
-$*Enter::
-    if (isenterRepeat == true)    ;キーリピートしているかどうか
-    {
-        if (A_PriorKey != "Enter") ;Enter長押し中の他キー押し下げを検出
-        {
-            KeyWait, Enter
-            isenterRepeat := false
-            Return
-        }
-        else Return
-    }
-    isenterRepeat := true
-Return
-;Enterを離したとき
-$*Enter up::
-    isenterRepeat := false
-    if (A_PriorKey == "Enter"){     ;Enter単押しを検出
-        Send {Blind}{Enter}     ;Enterを入力
-    }
-Return
+Enter::send,{Enter}
+Shift & Enter::Send,+{Enter}
+Ctrl & Enter::send,^{Enter}
+
+
 
 ; Keypirinha taskSwitcher
-F13 & c::Send,!{Space} {s}{w}{i}{c}{h}{Tab}
+BackSpace & c::Send,!{Space} {s}{w}{i}{c}{h}{Tab}
 
 ;選択したパスのフォルダを開く もしくは検索
-F13 & g::
+BackSpace & g::
 ClipSaved := ClipboardAll
 Send,^c
 If (RegExMatch(Clipboard, "^https?://")) {
@@ -124,7 +99,7 @@ Lalt::
 return
 
 ; 日本語変換変換
-F15::
+sc070::
 ; WinGet, vcurrentwindow, ID, A
 ;     vimestate := DllCall("user32.dll\SendMessageA", "UInt", DllCall("imm32.dll\ImmGetDefaultIMEWnd", "Uint", vcurrentwindow), "UInt", 0x0283, "Int", 0x0005, "Int", 0)
 ; if (vimestate == 1) {
@@ -133,7 +108,7 @@ F15::
 Send,{sc029}
 return
 ;ローマ字の再変換
-+F15::
++sc070::
 WinGet, vcurrentwindow, ID, A
     vimestate := DllCall("user32.dll\SendMessageA", "UInt", DllCall("imm32.dll\ImmGetDefaultIMEWnd", "Uint", vcurrentwindow), "UInt", 0x0283, "Int", 0x0005, "Int", 0)
 if (vimestate == 1) {
