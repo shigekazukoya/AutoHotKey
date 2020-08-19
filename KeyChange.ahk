@@ -25,7 +25,7 @@ BackSpace::Send,{BackSpace}
 BackSpace & M::Send,{APPSKEY}
 BackSpace & w::Send,^{F4}
 BackSpace & O::Send,{APPSKEY}{a} ; 管理者権限で実行
-BackSpace & y::Send,{BackSpace}
+BackSpace & sc027::Send,{BackSpace}
 
 BackSpace & R::Reload      ;リロード
 BackSpace & f::Edit        ;編集
@@ -91,16 +91,6 @@ Run,https://www.google.co.jp/search?q="""%Clipboard%""
 Clipboard := ClipSaved
 ClipSaved =
 Return
-
-
-; 英語に変換
-Lalt::
-; WinGet, vcurrentwindow, ID, A
-;     vimestate := DllCall("user32.dll\SendMessageA", "UInt", DllCall("imm32.dll\ImmGetDefaultIMEWnd", "Uint", vcurrentwindow), "UInt", 0x0283, "Int", 0x0005, "Int", 0)
-; if (vimestate == 1) {
-	Send,{Esc}
-; }
-return
 
 ; 日本語変換変換
 sc070::
@@ -213,3 +203,5 @@ Return
 ; ForVS
 #IfWinActive, ahk_exe devenv.exe,
 return
+
+
