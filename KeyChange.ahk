@@ -62,7 +62,11 @@ Enter::send,{Enter}
 Shift & Enter::Send,+{Enter}
 Ctrl & Enter::send,^{Enter}
 
-
+; 仮想デスクトップ用
+Enter & Left::Send,^#{Left}
+Enter & Right::Send,^#{Right}
+Enter & Up::Send,^#{D}
+Enter & Down::Send,^#{F4}
 
 ; Keypirinha taskSwitcher
 BackSpace & c::Send,!{Space} {s}{w}{i}{c}{h}{Tab}
