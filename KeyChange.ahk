@@ -1,8 +1,8 @@
 ;方向キー
-BackSpace & H::Send,{Blind}{Left}
-BackSpace & J::Send,{Blind}{Down}
-BackSpace & K::Send,{Blind}{Up}
-BackSpace & L::Send,{Blind}{Right}
+sc079 & H::Send,{Blind}{Left}
+sc079 & J::Send,{Blind}{Down}
+sc079 & K::Send,{Blind}{Up}
+sc079 & L::Send,{Blind}{Right}
 
 ;Alt+方向キー
 LAlt & H::Send,{Blind}{Lalt}{Left}
@@ -18,28 +18,28 @@ LAlt & L::Send,{Blind}{Lalt}{Right}
 ; return
 
 ;BS Delete
-BackSpace::Send,{BackSpace}
-+BackSpace::Send {Delete}
+sc079::Send,{BackSpace}
++sc079::Send {Delete}
 
 ;Home End PgUp Pgdn
-BackSpace & M::Send,{APPSKEY}
-BackSpace & w::Send,^{F4}
-BackSpace & O::Send,{APPSKEY}{a} ; 管理者権限で実行
-BackSpace & sc027::Send,{BackSpace}
+sc079 & M::Send,{APPSKEY}
+sc079 & w::Send,^{F4}
+sc079 & O::Send,{APPSKEY}{a} ; 管理者権限で実行
+sc079 & sc027::Send,{BackSpace}
 
-BackSpace & R::Reload      ;リロード
-BackSpace & f::Edit        ;編集
+sc079 & R::Reload      ;リロード
+sc079 & f::Edit        ;編集
 
 ; task切り替え用
-BackSpace & 1::Send,#1
-BackSpace & 2::Send,#2
-BackSpace & 3::Send,#3
-BackSpace & 4::Send,#4
-BackSpace & 5::Send,#5
-BackSpace & 6::Send,#6
-BackSpace & 7::Send,#7
-BackSpace & 8::Send,#8
-BackSpace & 9::Send,#9
+sc079 & 1::Send,#1
+sc079 & 2::Send,#2
+sc079 & 3::Send,#3
+sc079 & 4::Send,#4
+sc079 & 5::Send,#5
+sc079 & 6::Send,#6
+sc079 & 7::Send,#7
+sc079 & 8::Send,#8
+sc079 & 9::Send,#9
 ; task切り替え用
 Enter & 1::Send,#1
 Enter & 2::Send,#2
@@ -65,14 +65,14 @@ Ctrl & Enter::send,^{Enter}
 ; 仮想デスクトップ用
 Enter & Left::Send,^#{Left}
 Enter & Right::Send,^#{Right}
-Enter & Up::Send,^#{D}
+Enter & Up::Send,^#{d}
 Enter & Down::Send,^#{F4}
 
 ; Keypirinha taskSwitcher
-BackSpace & c::Send,!{Space} {s}{w}{i}{c}{h}{Tab}
+sc079 & c::Send,!{Space} {s}{w}{i}{c}{h}{Tab}
 
 ;選択したパスのフォルダを開く もしくは検索
-BackSpace & g::
+sc079 & g::
 ClipSaved := ClipboardAll
 Send,^c
 If (RegExMatch(Clipboard, "^https?://")) {
