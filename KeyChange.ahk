@@ -45,7 +45,7 @@ Ctrl & Enter::send,^{Enter}
 
 ;Windows +
 Enter & r::Send,#r
-Enter & e::Send,#e
+Enter & e::Send,#{7} ;taskbarの7個目
 
 Enter & h::Send,#{Left}
 Enter & j::Send,#{Down}
@@ -185,3 +185,17 @@ Return
 ; ForVS
 #IfWinActive, ahk_exe devenv.exe,
 return
+
+;For explorer
+#IfWinActive, ahk_exe Explorer.EXE,
+
+;explorerからvscodeを開く
+;(レジストリを編集してコンテキストメニューからvscodeを起動できるようにしておく)
+Ctrl & s::Send,{AppsKey}{d}
+
+;explorerからmarkdownFileを新規作成する
+;(レジストリを編集してコンテキストメニューからMarkdownFileを作成できるようにしておく)
+Ctrl & m::Send,{AppsKey}{x}{m}
+
+return
+
