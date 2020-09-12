@@ -38,13 +38,12 @@ Enter & 7::Send,#7
 Enter & 8::Send,#8
 Enter & 9::Send,#9
 
-
 ;Enter
 Enter::send,{Enter}
 Shift & Enter::Send,+{Enter}
 Ctrl & Enter::send,^{Enter}
 
-;Windows  +
+;Windows +
 Enter & r::Send,#r
 Enter & e::Send,#e
 
