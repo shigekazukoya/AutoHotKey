@@ -172,15 +172,6 @@ if(ErrorLevel == "EndKey:J"){
 }
 Return
 
-; Shift空打ち
-$*~LShift::Send {Blind}{Shift}
-LShift up::
-  if (A_PriorKey == "LShift")
-  {
-    Send, {Esc}
-  }
-Return
-
 
 ; ForVS
 #IfWinActive, ahk_exe devenv.exe,
