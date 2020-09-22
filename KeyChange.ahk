@@ -43,6 +43,8 @@ Enter::send,{Enter}
 Shift & Enter::Send,+{Enter}
 Ctrl & Enter::send,^{Enter}
 
+Enter & sc079::Send,!{Tab}
+
 ;Windows +
 Enter & r::Send,#r
 Enter & e::Send,#{7} ;taskbarの7個目
@@ -57,6 +59,9 @@ Enter & Left::Send,^#{Left}
 Enter & Right::Send,^#{Right}
 Enter & Up::Send,^#{d}
 Enter & Down::Send,^#{F4}
+
+LAlt & sc027::Send, ^+!{q}{BackSpace}
+
 
 ;Goto
 Enter & g::
@@ -189,4 +194,3 @@ Ctrl & s::Send,{AppsKey}{d}
 Ctrl & m::Send,{AppsKey}{x}{m}
 
 return
-
