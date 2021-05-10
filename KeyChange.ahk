@@ -1,7 +1,31 @@
-; KeyCHange
+ *Space::
+  if (isSpaceRepeat == true)
+  {
+    if (A_PriorKey != "Space")
+    {
+      KeyWait, Space
+      Send {Blind}{ShiftUp}
+      isSpaceRepeat := false
+      Return
+    }
+    else Return
+  }
+  Send {Blind}{ShiftDown}
+  isSpaceRepeat := true
+Return
+
+$*Space up::
+  Send {Blind}{ShiftUp}
+  isSpaceRepeat := false
+  if (A_PriorKey == "Space"){
+    Send {Blind}{Space}
+  }
+Return
+
+; KeyCHaneあ
 ; sc07B→Enter
 
-;arrow
+; arrow
 sc079 & H::Send,{Blind}{Left}
 sc079 & J::Send,{Blind}{Down}
 sc079 & K::Send,{Blind}{Up}
@@ -21,11 +45,12 @@ sc079 & w::Send,!{F4}
 
 ;ContextMenu
 sc079 & M::Send,{APPSKEY}
-sc079 & O::Send,{APPSKEY}{a} ; 管理者権限で実行
 
 ;For this script
-sc079 & R::Reload   ;リロード
-sc079 & e::Edit    ;編集
+sc079 & R::Reload
+sc079 & e::Edit
+
+!sc027::send,^{F12}
 
 ; taskbar
 Enter & 1::Send,#1
@@ -43,11 +68,11 @@ Enter::send,{Enter}
 Shift & Enter::Send,+{Enter}
 Ctrl & Enter::send,^{Enter}
 
-Enter & sc079::Send,!{Tab}
+Enter & sc079::Send,{AltDown}{Tab}{AltUp}
 
 ;Windows +
 Enter & r::Send,#r
-Enter & e::Send,#{7} ;taskbarの7個目
+Enter & e::Send,#{7}
 
 Enter & h::Send,#{Left}
 Enter & j::Send,#{Down}
@@ -60,8 +85,8 @@ Enter & Right::Send,^#{Right}
 Enter & Up::Send,^#{d}
 Enter & Down::Send,^#{F4}
 
-LAlt & sc027::Send, ^+!{q}{BackSpace}
 
+sc070:: Send,{sc029}
 
 ;Goto
 Enter & g::
@@ -84,10 +109,6 @@ Clipboard := ClipSaved
 ClipSaved =
 Return
 
-; 日本語変換変換
-sc070::
-Send,{sc029}
-return
 ;ローマ字の再変換
 +sc070::
 WinGet, vcurrentwindow, ID, A
@@ -128,7 +149,7 @@ Return
 		Send,^c
 		ClipWait,1
 	}
-		Send,{sc029}	;ここにIMEをオンにする処理
+		Send,{sc029}
 	if(e==0){
 		Send,%Clipboard%
 	}
@@ -136,33 +157,6 @@ Return
 	ClipSaved =
 return
 
-; SandS
-;Spaceを押したとき
-$*Space::
-  if (isSpaceRepeat == true)  ;キーリピートしているかどうか
-  {
-    if (A_PriorKey != "Space") ;Space長押し中の他キー押し下げを検出
-    {
-      KeyWait, Space
-      Send {Blind}{ShiftUp}    ;Shiftをリリース
-      isSpaceRepeat := false
-      Return
-    }
-    else Return
-  }
-  Send {Blind}{ShiftDown}   ;Shiftを押し下げ
-  isSpaceRepeat := true
-Return
-;Spaceを離したとき
-$*Space up::
-  Send {Blind}{ShiftUp}    ;Shiftをリリース
-  isSpaceRepeat := false
-  if (A_PriorKey == "Space"){   ;Space単押しを検出
-    Send {Blind}{Space}   ;Spaceを入力
-  }
-Return
-
-; Vim用
 #IfWinActive, ahk_exe Code.exe,
 ~j up::
 Input, jout, I T0.1 V L1, {j}
@@ -172,17 +166,15 @@ if(ErrorLevel == "EndKey:J"){
 
   If (vimestate==1)
 	{
-  SendInput, {BackSpace 2}{Esc 3}
+		Send,{BackSpace 2}^{[ 2}
+		Sleep, 200
+		Send, {Space}{w}
 	}
 }
 Return
-
-
-; ForVS
 #IfWinActive, ahk_exe devenv.exe,
 return
 
-;For explorer
 #IfWinActive, ahk_exe Explorer.EXE,
 
 ;explorerからvscodeを開く
@@ -191,6 +183,21 @@ Ctrl & s::Send,{AppsKey}{d}
 
 ;explorerからmarkdownFileを新規作成する
 ;(レジストリを編集してコンテキストメニューからMarkdownFileを作成できるようにしておく)
-Ctrl & m::Send,{AppsKey}{x}{m}
+Ctrl & m::Send,{AppsKey}{w}{m}
 
 return
+
+
+#IfWinActive, ahk_exe WindowsTerminal.exe
+~j up::
+Input, jout, I T0.1 V L1, {j}
+if(ErrorLevel == "EndKey:J"){
+	WinGet, vcurrentwindow, ID, A
+  vimestate := DllCall("user32.dll\SendMessageA", "UInt", DllCall("imm32.dll\ImmGetDefaultIMEWnd", "Uint", vcurrentwindow), "UInt", 0x0283, "Int", 0x0005, "Int", 0)
+
+  If (vimestate==1)
+	{
+		Send,{BackSpace 2}^{[ 2}
+	}
+}
+Return
