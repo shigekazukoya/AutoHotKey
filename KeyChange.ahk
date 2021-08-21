@@ -22,14 +22,15 @@ $*Space up::
   }
 Return
 
-; KeyCHaneあ
+
+; KeyCHane
 ; sc07B→Enter
 
 ; arrow
-sc079 & H::Send,{Blind}{Left}
-sc079 & J::Send,{Blind}{Down}
-sc079 & K::Send,{Blind}{Up}
-sc079 & L::Send,{Blind}{Right}
+BackSpace & H::Send,{Blind}{Left}
+BackSpace & J::Send,{Blind}{Down}
+BackSpace & K::Send,{Blind}{Up}
+BackSpace & L::Send,{Blind}{Right}
 
 ;Alt+arrow
 LAlt & H::Send,{Blind}{Lalt}{Left}
@@ -38,17 +39,17 @@ LAlt & K::Send,{Blind}{Lalt}{Up}
 LAlt & L::Send,{Blind}{Lalt}{Right}
 
 ;BS Delete
-sc079::Send,{BackSpace}
-sc079 & sc027::Send,{BackSpace}
-sc079 & sc028::Send,{Delete}
-sc079 & w::Send,!{F4}
+BackSpace::Send,{BackSpace}
+BackSpace & sc027::Send,{BackSpace}
+BackSpace & sc028::Send,{Delete}
+BackSpace & w::Send,!{F4}
 
 ;ContextMenu
-sc079 & M::Send,{APPSKEY}
+BackSpace & M::Send,{APPSKEY}
 
 ;For this script
-sc079 & R::Reload
-sc079 & e::Edit
+BackSpace & R::Reload
+BackSpace & e::Edit
 
 !sc027::send,^{F12}
 
@@ -62,13 +63,14 @@ Enter & 6::Send,#6
 Enter & 7::Send,#7
 Enter & 8::Send,#8
 Enter & 9::Send,#9
+Enter & q::Send,#1
 
 ;Enter
 Enter::send,{Enter}
 Shift & Enter::Send,+{Enter}
 Ctrl & Enter::send,^{Enter}
 
-Enter & sc079::Send,{AltDown}{Tab}{AltUp}
+Enter & BackSpace::Send,{AltDown}{Tab}{AltUp}
 
 ;Windows +
 Enter & r::Send,#r
@@ -189,6 +191,34 @@ return
 
 
 #IfWinActive, ahk_exe WindowsTerminal.exe
+~j up::
+Input, jout, I T0.1 V L1, {j}
+if(ErrorLevel == "EndKey:J"){
+	WinGet, vcurrentwindow, ID, A
+  vimestate := DllCall("user32.dll\SendMessageA", "UInt", DllCall("imm32.dll\ImmGetDefaultIMEWnd", "Uint", vcurrentwindow), "UInt", 0x0283, "Int", 0x0005, "Int", 0)
+
+  If (vimestate==1)
+	{
+		Send,{BackSpace 2}^{[ 2}
+	}
+}
+Return
+
+#IfWinActive, ahk_exe mintty.exe
+~j up::
+Input, jout, I T0.1 V L1, {j}
+if(ErrorLevel == "EndKey:J"){
+	WinGet, vcurrentwindow, ID, A
+  vimestate := DllCall("user32.dll\SendMessageA", "UInt", DllCall("imm32.dll\ImmGetDefaultIMEWnd", "Uint", vcurrentwindow), "UInt", 0x0283, "Int", 0x0005, "Int", 0)
+
+  If (vimestate==1)
+	{
+		Send,{BackSpace 2}^{[ 2}
+	}
+}
+Return
+
+#IfWinActive, ahk_exe Obsidian.exe
 ~j up::
 Input, jout, I T0.1 V L1, {j}
 if(ErrorLevel == "EndKey:J"){
