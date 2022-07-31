@@ -204,6 +204,7 @@ if(ErrorLevel == "EndKey:J"){
 }
 Return
 
+
 #IfWinActive, ahk_exe mintty.exe
 ~j up::
 Input, jout, I T0.1 V L1, {j}
