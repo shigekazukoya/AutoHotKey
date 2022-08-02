@@ -111,145 +111,38 @@ Clipboard := ClipSaved
 ClipSaved =
 Return
 
-;ローマ字の再変換
-+sc070::
-WinGet, vcurrentwindow, ID, A
-  vimestate := DllCall("user32.dll\SendMessageA", "UInt", DllCall("imm32.dll\ImmGetDefaultIMEWnd", "Uint", vcurrentwindow), "UInt", 0x0283, "Int", 0x0005, "Int", 0)
-if (vimestate == 1) {
-Return
-}
-	ClipSaved := ClipboardAll
-	c:=""
-	e:=0
-	while(c!=Clipboard or c==""){
-		c:=Clipboard
-		Send,+{Left}
-		Clipboard =
-		Send,^c
-		ClipWait,1
-		sl:=StrLen(Clipboard)
-		if(sl==0){
-			e:=1
-			break
-		} else if(RegExMatch(SubStr(Clipboard,1,1),"[\-\~]")){
-			Send,+^{Left}
-		} else if(RegExMatch(Clipboard,"[^0-9a-zA-Z\-\~]")){
-			if(sl==1 or (sl==2 and RegExMatch(Clipboard,"[\r\n]"))){
-				e:=1
-				Send,+{Right}
-			} else {
-				Send,+{Right}
-				Clipboard =
-				Send,^c
-				ClipWait,1
-			}
-			break
-		} else {
-			Send,+{Right}+^{Left}
-		}
-		Clipboard =
-		Send,^c
-		ClipWait,1
-	}
-		Send,{sc029}
-	if(e==0){
-		Send,%Clipboard%
-	}
-	Clipboard := ClipSaved
-	ClipSaved =
-return
-
-#IfWinActive, ahk_exe Code.exe,
-~j up::
-Input, jout, I T0.1 V L1, {j}
-if(ErrorLevel == "EndKey:J"){
-	WinGet, vcurrentwindow, ID, A
-  vimestate := DllCall("user32.dll\SendMessageA", "UInt", DllCall("imm32.dll\ImmGetDefaultIMEWnd", "Uint", vcurrentwindow), "UInt", 0x0283, "Int", 0x0005, "Int", 0)
-
-  If (vimestate==1)
-	{
-		Send,{BackSpace 2}^{[ 2}
-		Sleep, 200
-		Send, {Space}{w}
-	}
-}
-Return
-#IfWinActive, ahk_exe devenv.exe,
-return
-
-#IfWinActive, ahk_exe Explorer.EXE,
-
-;explorerからvscodeを開く
-;(レジストリを編集してコンテキストメニューからvscodeを起動できるようにしておく)
-Ctrl & s::Send,{AppsKey}{d}
-
-;explorerからmarkdownFileを新規作成する
-;(レジストリを編集してコンテキストメニューからMarkdownFileを作成できるようにしておく)
-Ctrl & m::Send,{AppsKey}{w}{m}
+#IfWinActive ahk_exe EXCEl.EXE
+    Shift & Space::send,+{Space}
+    +^sc027::send, +{Space}+^{sc027}
+    +^!sc027::send, ^{Space}+^{sc027}
+    ^l::send,+{Space}^{-}
+    tab::send,^{PgDn}
+    +tab::send,^{PgUp}
+    !Up:: send,+{Space}^{x}{Up}+{Space}+^{sc027}
+    !Down:: send,+{Space}^{x}{Down 2}+{Space}+^{sc027}
+    !+Down:: send,+{Space}^{c}{Down}+{Space}+^{sc027}
+    !Right:: send,^{x}{Right 2}{AppsKey}{e}{Enter}
+    !Left:: send,^{x}{Left}{AppsKey}{e}{Enter}
+    ^q::send,^{_}^{&}
 
 return
 
-
-#IfWinActive, ahk_exe WindowsTerminal.exe
-~j up::
-Input, jout, I T0.1 V L1, {j}
-if(ErrorLevel == "EndKey:J"){
-	WinGet, vcurrentwindow, ID, A
-  vimestate := DllCall("user32.dll\SendMessageA", "UInt", DllCall("imm32.dll\ImmGetDefaultIMEWnd", "Uint", vcurrentwindow), "UInt", 0x0283, "Int", 0x0005, "Int", 0)
-
-  If (vimestate==1)
-	{
-		Send,{BackSpace 2}^{[ 2}
-	}
-}
-Return
-
-#IfWinActive, ahk_exe mintty.exe
-~j up::
-Input, jout, I T0.1 V L1, {j}
-if(ErrorLevel == "EndKey:J"){
-	WinGet, vcurrentwindow, ID, A
-  vimestate := DllCall("user32.dll\SendMessageA", "UInt", DllCall("imm32.dll\ImmGetDefaultIMEWnd", "Uint", vcurrentwindow), "UInt", 0x0283, "Int", 0x0005, "Int", 0)
-
-  If (vimestate==1)
-	{
-		Send,{BackSpace 2}^{[ 2}
-	}
-}
-Return
-
-#IfWinActive, ahk_exe Obsidian.exe
-~j up::
-Input, jout, I T0.1 V L1, {j}
-if(ErrorLevel == "EndKey:J"){
-	WinGet, vcurrentwindow, ID, A
-  vimestate := DllCall("user32.dll\SendMessageA", "UInt", DllCall("imm32.dll\ImmGetDefaultIMEWnd", "Uint", vcurrentwindow), "UInt", 0x0283, "Int", 0x0005, "Int", 0)
-
-  If (vimestate==1)
-	{
-		Send,{BackSpace 2}^{[ 2}
-	}
-}
-Return
+; #IfWinActive 仕事術.xlsx - Cent Browser.xlsx, ahk_class Chrome_WidgetWin_1
+; #IfWinActive xlsx
+#IfWinActive,xlsx ahk_class Chrome_WidgetWin_1
+; #IfWinActive Cent Browser
+    Shift & Space::send,+{Space}
+    +^sc027::send, +{Space}+^{sc027}
+    +^!sc027::send, ^{Space}+^{sc027}
+    ^l::send,+{Space}^{-}
+    tab::send,^!{PgDn}
+    +tab::send,^!{PgUp}
+    ; ^q::send,{Alt}{h}{b}{n}{Alt}{h}{b}{s}
+return
 
 
-
-#IfWinActive, ahk_exe wezterm-gui.exe
-~j up::
-Input, jout, I T0.1 V L1, {j}
-if(ErrorLevel == "EndKey:J"){
-	WinGet, vcurrentwindow, ID, A
-  vimestate := DllCall("user32.dll\SendMessageA", "UInt", DllCall("imm32.dll\ImmGetDefaultIMEWnd", "Uint", vcurrentwindow), "UInt", 0x0283, "Int", 0x0005, "Int", 0)
-
-  If (vimestate==1)
-	{
-		Send,{BackSpace 2}^{[ 2}
-	}
-}
-Return
-
-
-#IfWinActive, ahk_exe Joplin.exe
+; for vim-ime
+#If WinActive("ahk_exe Joplin.exe") || WinActive("ahk_exe wezterm-gui.exe") || WinActive("ahk_exe mintty.exe") || WinActive("ahk_exe WindowsTerminal.exe") || WinActive("ahk_exe Code.exe")
 ~j up::
 Input, jout, I T0.1 V L1, {j}
 if(ErrorLevel == "EndKey:J"){
