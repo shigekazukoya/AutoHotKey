@@ -231,3 +231,34 @@ if(ErrorLevel == "EndKey:J"){
 	}
 }
 Return
+
+
+
+#IfWinActive, ahk_exe wezterm-gui.exe
+~j up::
+Input, jout, I T0.1 V L1, {j}
+if(ErrorLevel == "EndKey:J"){
+	WinGet, vcurrentwindow, ID, A
+  vimestate := DllCall("user32.dll\SendMessageA", "UInt", DllCall("imm32.dll\ImmGetDefaultIMEWnd", "Uint", vcurrentwindow), "UInt", 0x0283, "Int", 0x0005, "Int", 0)
+
+  If (vimestate==1)
+	{
+		Send,{BackSpace 2}^{[ 2}
+	}
+}
+Return
+
+
+#IfWinActive, ahk_exe Joplin.exe
+~j up::
+Input, jout, I T0.1 V L1, {j}
+if(ErrorLevel == "EndKey:J"){
+	WinGet, vcurrentwindow, ID, A
+  vimestate := DllCall("user32.dll\SendMessageA", "UInt", DllCall("imm32.dll\ImmGetDefaultIMEWnd", "Uint", vcurrentwindow), "UInt", 0x0283, "Int", 0x0005, "Int", 0)
+
+  If (vimestate==1)
+	{
+		Send,{BackSpace 2}^{[ 2}
+	}
+}
+Return
